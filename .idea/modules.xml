@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SteamScrapinglxml.iml" filepath="$PROJECT_DIR$/SteamScrapinglxml.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Web-Scraping-lxml.iml" filepath="$PROJECT_DIR$/Web-Scraping-lxml.iml" />
     </modules>
   </component>
 </project>
