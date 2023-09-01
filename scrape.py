@@ -1,31 +1,59 @@
 import requests
 import lxml.html
 import yagmail
-import smtplib
+from typing import NamedTuple
+import pandas as pd
+import os.path
 
-# Articles are extracted in a list, assign
-html = requests.get('https://geeksforgeeks.org/trending')
+from datetime import datetime
+
+
+class Article(NamedTuple):
+    title: str
+    url: str
+
+
+html = requests.get("https://geeksforgeeks.org/trending")
 doc = lxml.html.fromstring(html.content)  # created an HtmlElement object
-trending_python = doc.xpath('//*[@id="gfg-trending-main-div"]')[0]  # filter div tags that have trending id
+trending_python = doc.xpath('//*[@id="gfg-trending-main-div"]')[
+    0
+]  # filter div tags that have trending id
 href_list = []
-titles = trending_python.xpath('//*[@id="gfg-trending-main-div"]/div[5]/div[2]/a/p/text()') # extract titles trending tab
+titles = []
+titles = trending_python.xpath(
+    '//*[@id="gfg-trending-main-div"]/div[5]/div[2]/a/p/text()'
+)  # extract titles trending tab
 hrefs = trending_python.xpath('//*[@id="gfg-trending-main-div"]/div[5]/div[2]/a')
 for href in hrefs:
-    href_list.append(href.attrib['href'])
-merged_list = [(titles[i], href_list[i]) for i in range(0, len(titles))]
-filter = ["SQLAlchemy", "binary"] # words of interest
-filter_set = set([b for b in map(lambda x: x[0], merged_list) if any(a in b for a in filter)]) # extract the wanted titles to use as a filter as a set
-for x in range(len(merged_list) - 1, -1, -1):
-    if merged_list[x][0] not in filter_set:
-      del merged_list[x]
-print((merged_list))
+    href_list.append(href.attrib["href"])
+articles = []
+for title, url in zip(titles, href_list):
+    article = Article(title=title, url=url)
+    articles.append(article)
+article_filter = ["SQLAlchemy", "binary"]  # words of interest
+res = [
+    b for b in map(lambda x: x, articles) if any(a in b.title for a in article_filter)
+]  # filter out articles by certain word triggers
 
-with open("config.txt", "r") as f:
-    email = f.readline()
-    temp_password = f.readline()
+with open(
+    "config.txt", "r"
+) as f:  # read sender email and password and reciever email from config.txt
+    content = [line.strip() for line in f]
 
-yag = yagmail.SMTP(email, temp_password)
-contents = [
-    "This is the body, and here is just text ",
-]
-#yag.send('ninjaspy713@gmail.com', 'subject', contents)
+if (os.path.isfile("./GFGArticles.csv")) is False:
+    df = pd.DataFrame(columns=["title", "url"])
+    df = df.to_csv("GFGArticles.csv", index=False)
+col_1 = [b for b in map(lambda x: x.title, res)]
+col_2 = [b for b in map(lambda x: x.url, res)]
+df = pd.read_csv("GFGArticles.csv")
+data = {"title": col_1, "url": col_2, "date": pd.Timestamp.now()}
+df = pd.DataFrame(data)
+df['date'] = df['date'].dt.floor('T')
+df.to_csv("GFGArticles.csv", mode="a", header=False, index=False)
+print(df)
+# df.to_csv('GFGArticles.csv', mode='a', header=False)
+
+
+# yag = yagmail.SMTP(content[0], content[1])
+# msg = '\n'.join(map(str, res))
+# yag.send(content[2], 'Trending in Python, GEEKSFORGEEKS', msg)
