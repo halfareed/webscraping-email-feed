@@ -34,7 +34,7 @@ Usage
     Update the config.txt file with your email and password settings.
     Run the main script to scrape and save trending articles:
 
-    python scrape.py
+    python main.py
 
 Dependencies
 
