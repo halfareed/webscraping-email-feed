@@ -1,0 +1,4 @@
+python, cvs,pandas
+SENDER@gmail.com
+SENDER_PASSWORD
+RECEIVER@gmail.com
