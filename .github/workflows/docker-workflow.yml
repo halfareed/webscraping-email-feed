@@ -12,18 +12,25 @@ jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Lint code
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.10.14'
-      - run: |
-          pip install pylint
-          pylint --disable=E0401 main.py
-          pylint --disable=E0401 src/modules/article_parser.py
-          pylint --disable=E0401 src/modules/csv_handler.py
-          pylint --disable=E0401 src/modules/email_notifier.py
+     - name: Checkout repository
+       uses: actions/checkout@v2
+     - name: Set up Python
+       uses: actions/setup-python@v2
+       with:
+          python-version: '3.10.14'      
+     - name: Lint code
+       run:
+          pylint --disable=E0401 main.py > main_lint.txt
+          pylint --disable=E0401 src/modules/article_parser.py > article_parser_lint.txt
+          pylint --disable=E0401 src/modules/csv_handler.py > csv_handler_lint.txt
+          pylint --disable=E0401 src/modules/email_notifier.py > email_notifier_lint.txt
 
+     - name: Display linting results
+       run:
+          cat main_lint.txt
+          cat article_parser_lint.txt
+          cat csv_handler_lint.txt
+          cat email_notifier_lint.txt
   build:
     runs-on: ubuntu-latest
     needs: lint
