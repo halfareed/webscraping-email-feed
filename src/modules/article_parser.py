@@ -1,17 +1,19 @@
+"""Module providing a function to parse and filter articles."""
+
 # Define Article class using NamedTuple
 import os
 from typing import NamedTuple
-import lxml.html  # type: ignore
+import lxml.html
 import requests
-import argparse
 
 class Article(NamedTuple):
+    """Class representing the article as a tuple of the 1) title and 2) url"""
     title: str
     url: str
 
 
 # Function to parse and filter articles
-def parse_and_filter(link: str, *args: list) -> list["Article"]:
+def parse_and_filter(link: str) -> list["Article"]:
     """
     Parses and filters articles based on keywords.
 

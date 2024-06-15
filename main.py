@@ -26,7 +26,7 @@ def main():
     articles_temp = parse_and_filter("https://geeksforgeeks.org/trending")
     filtered_articles_df = articles_to_csv(articles_temp)
     if len(filtered_articles_df.index):
-        send_email_notification(filtered_articles_df)
+        send_email_notification(filtered_articles_df[:])
     else:
         print("No new articles")
 

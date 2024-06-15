@@ -19,10 +19,10 @@ jobs:
           python-version: '3.10.14'
       - run: |
           pip install pylint
-          pylint main.py
-          pylint src/modules/article_parser.py
-          pylint src/modules/csv_handler.py
-          pylint src/modules/email_notifier.py
+          pylint --disable=E0401 main.py
+          pylint --disable=E0401 src/modules/article_parser.py
+          pylint --disable=E0401 src/modules/csv_handler.py
+          pylint --disable=E0401 src/modules/email_notifier.py
 
   build:
     runs-on: ubuntu-latest

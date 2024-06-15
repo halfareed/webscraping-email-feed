@@ -1,3 +1,6 @@
+"""Module providing a function to send email notifications of filtered articles."""
+
+
 import yagmail
 import os
 from yagmail.error import YagInvalidEmailAddress, YagAddressError
