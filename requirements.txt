@@ -1,5 +1,5 @@
 lxml==4.9.3
 pandas~=2.2.2
 yagmail==0.15.293
-requests~=2.31.0
+requests~=2.32.0
 python-dotenv~=1.0.1
