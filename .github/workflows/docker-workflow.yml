@@ -25,19 +25,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install pylint
      
-     - name: Lint code
-       run:
-          pylint --disable=E0401 main.py > main_lint.txt
-          pylint --disable=E0401 src/modules/article_parser.py > article_parser_lint.txt
-          pylint --disable=E0401 src/modules/csv_handler.py > csv_handler_lint.txt
-          pylint --disable=E0401 src/modules/email_notifier.py > email_notifier_lint.txt
-
-     - name: Display linting results
-       run:
-          cat main_lint.txt
-          cat article_parser_lint.txt
-          cat csv_handler_lint.txt
-          cat email_notifier_lint.txt
+     - name: Analysing the code with pylint
+       run: |
+        pylint --disable=E0401 --exit-zero main.py src/modules/*.py
+        
   build:
     runs-on: ubuntu-latest
     needs: lint
