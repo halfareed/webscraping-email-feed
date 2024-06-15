@@ -1,18 +1,23 @@
 import yagmail
+import os
 from yagmail.error import YagInvalidEmailAddress, YagAddressError
-from smtplib import SMTPAuthenticationError,SMTPException
+from smtplib import SMTPAuthenticationError, SMTPException
+from dotenv import load_dotenv
+
+
+load_dotenv()
 
 def send_email_notification(msg_df) -> None:
     """
     Sends email notifications for new articles.
     """
-    with open("src/tests/config/config.txt", "r") as f:
-        content = [line.strip() for line in f]
-        print(content)
+    sender = os.getenv('SENDER')
+    sender_unlock = os.getenv('SENDER_UNLOCK')
+    recipient = os.getenv('RECIPIENT')
     try:
         # Send email using yagmail API
-        yag = yagmail.SMTP(content[1], content[2])
-        yag.send(content[3], "GEEKSFORGEEKS, Trending in Python", msg_df.iloc[:])
+        yag = yagmail.SMTP(sender, sender_unlock)
+        yag.send(recipient, "GEEKSFORGEEKS, Trending in Python", msg_df.iloc[:])
         print("Check Inbox!")
     except SMTPAuthenticationError:
         print("Username and Password not accepted")
@@ -21,5 +26,3 @@ def send_email_notification(msg_df) -> None:
     except SMTPException:
         print("Server error")
     return
-
-

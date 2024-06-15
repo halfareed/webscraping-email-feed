@@ -1,9 +1,9 @@
 # Define Article class using NamedTuple
-import re
+import os
 from typing import NamedTuple
-import lxml.html
+import lxml.html  # type: ignore
 import requests
-
+import argparse
 
 class Article(NamedTuple):
     title: str
@@ -45,7 +45,11 @@ def parse_and_filter(link: str, *args: list) -> list["Article"]:
     ]
 
     # Define keywords of interest for filtering
-    article_filter = re.findall(r'\w+', open('src/tests/config/config.txt', 'r').readline())
+    first_keyword = os.getenv('FIRST_KEYWORD')
+    second_keyword = os.getenv('SECOND_KEYWORD')
+    third_keyword = os.getenv('THIRD_KEYWORD')
+    article_filter = [first_keyword, second_keyword, third_keyword]
+    article_filter = [keyword.lower() for keyword in article_filter]
 
 
     # Filter articles based on keywords

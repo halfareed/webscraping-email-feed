@@ -1,3 +1,6 @@
-lxml==5.2.1
-pandas==2.2.2
+lxml==4.9.3
+pandas~=2.2.2
 yagmail==0.15.293
+requests~=2.30.0
+argparse~=1.4.0
+python-dotenv~=1.0.1
