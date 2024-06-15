@@ -1,3 +1,5 @@
+"""Module providing a function to save a cvs file of the filtered articles."""
+
 import os
 
 import numpy as np
@@ -47,5 +49,5 @@ def articles_to_csv(article_list: list):
     df_to_file.to_csv("GFGArticles.csv", index=False)
 
     # Filter out unique entities and send an email if there are new articles
-    msg_df = df_to_file[df_to_file.exists == False]
+    msg_df = df_to_file[df_to_file.exists is False]
     return msg_df
