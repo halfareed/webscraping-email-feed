@@ -63,7 +63,7 @@ jobs:
           echo FIRST_KEYWORD=${{ secrets.FIRST_KEYWORD }} >> .env
           echo SECOND_KEYWORD=${{ secrets.SECOND_KEYWORD }} >> .env
           echo THIRD_KEYWORD=${{ secrets.THIRD_KEYWORD }} >> .env
-          docker run -it --env-file=.env $DOCKER_TAGS python main.py
+          docker run --env-file=.env $DOCKER_TAGS python main.py
         env:
             SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
             SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
