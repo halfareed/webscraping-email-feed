@@ -23,13 +23,13 @@ def main():
     """
     Main function to run the program.
     """
-    articles_temp = parse_and_filter("https://geeksforgeeks.org/trending")
-    filtered_articles_df = articles_to_csv(articles_temp)
-    if len(filtered_articles_df.index):
-        send_email_notification(filtered_articles_df[:])
-    else:
+    new_articles = parse_and_filter("https://geeksforgeeks.org/trending")
+    try:
+        filtered_articles = articles_to_csv(new_articles)
+        if len(filtered_articles):
+            print("not empty")
+            return send_email_notification(filtered_articles)
+    except(AttributeError, TypeError):
         print("No new articles")
-
-
 if __name__ == "__main__":
     main()
