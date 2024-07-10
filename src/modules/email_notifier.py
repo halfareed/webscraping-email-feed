@@ -20,7 +20,7 @@ def send_email_notification(msg_df) -> None:
     try:
         # Send email using yagmail API
         yag = yagmail.SMTP(sender, sender_unlock)
-        yag.send(recipient, "GEEKSFORGEEKS, Trending in Python", msg_df.iloc[:])
+        yag.send(recipient, "GEEKSFORGEEKS, Trending in Python", msg_df)
         print("Check Inbox!")
     except SMTPAuthenticationError:
         print("Username and Password not accepted")
