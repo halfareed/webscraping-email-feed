@@ -51,7 +51,10 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/webscraper:latest
-
+     
+      - name: Set Docker tags in environment
+        run: echo "DOCKER_TAGS=${{ secrets.DOCKER_USERNAME }}/webscraper:latest" >> $GITHUB_ENV
+     
       - name: Run Docker container
         run: |
           echo SENDER_EMAIL=${{ secrets.SENDER_EMAIL }} > .env
@@ -60,7 +63,7 @@ jobs:
           echo FIRST_KEYWORD=${{ secrets.FIRST_KEYWORD }} >> .env
           echo SECOND_KEYWORD=${{ secrets.SECOND_KEYWORD }} >> .env
           echo THIRD_KEYWORD=${{ secrets.THIRD_KEYWORD }} >> .env
-          docker run -d --env-file=.env ${{ secrets.DOCKER_USERNAME }}/webscraper:latest python main.py
+          docker run --env-file=.env $DOCKER_TAGS python main.py
         env:
             SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
             SENDER_PASSWORD: ${{ secrets.SENDER_PASSWORD }}
