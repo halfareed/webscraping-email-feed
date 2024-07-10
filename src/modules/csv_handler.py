@@ -30,24 +30,23 @@ def articles_to_csv(article_list: list):
     new_data = {
         "title": titles_column,
         "url": url_column,
-        "date": str(pd.Timestamp.now().floor("T")),
+        "date": str(pd.Timestamp.now().floor("min")),
     }
-    df_new_data = pd.DataFrame(new_data).astype(
-        {"title": object, "url": object, "date": object}
-    )
+    df_new_data = pd.DataFrame(new_data).astype({"title": str, "url": str, "date": str})
 
     # Merge the existing DataFrame with the new data
     df_to_file = pd.merge(
         dataframe_on_file[["title", "url"]],
         df_new_data,
         how="outer",
-        indicator="exists",
+        indicator="new",
     )
-    df_to_file["exists"] = np.where(df_to_file.exists == "both", True, False)
+    df_to_file["new"] = np.where(df_to_file.new == "both", True, False)
 
     # Save the merged DataFrame to the CSV file
     df_to_file.to_csv("GFGArticles.csv", index=False)
-
     # Filter out unique entities and send an email if there are new articles
-    msg_df = df_to_file[df_to_file.exists is False]
+    msg_df = df_to_file.loc[
+        (df_to_file["date"].notnull()) & (df_to_file["new"] == False)
+    ]
     return msg_df
