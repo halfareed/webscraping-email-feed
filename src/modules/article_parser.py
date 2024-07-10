@@ -51,13 +51,13 @@ def parse_and_filter(link: str) -> list["Article"]:
     second_keyword = os.getenv('SECOND_KEYWORD')
     third_keyword = os.getenv('THIRD_KEYWORD')
     article_filter = [first_keyword, second_keyword, third_keyword]
-    article_filter = [keyword.lower() for keyword in article_filter]
+    article_filter = [str(keyword).lower() for keyword in article_filter]
 
 
     # Filter articles based on keywords
     article_result = [
         article
         for article in articles
-        if any(keyword in article.title.lower() for keyword in article_filter)
+        if any(str(keyword) in article.title.lower() for keyword in article_filter)
     ]
     return article_result
