@@ -43,20 +43,17 @@ Install these dependencies using the provided requirements.txt file.
     cd webscraping-email-feed
     pip install -r requirements.txt
 
-Configuration
+Configuration using .env
 
-    edit the config.txt file in the project directory with the following format:
-
-    sender_email
-    sender_password
-    receiver_email
-
-    Replace sender_email with your email address, sender_password with your email password, and receiver_email with the recipient's email address.
-    Ensure that your email provider allows less secure apps or generate an app password for your email account if required.
-    
-    It is HIGHLY ADVISED that you use an App password instead of your actual password. Reference this link for Gmail App passwords:
-    https://support.google.com/mail/answer/185833?hl=en
-    A future implementation to encrypt the password after a 1-time prompt to enter it should help with the security aspect of this.
+1. **Create a .env File**:
+   Create a `.env` file in the root directory with the following variables:
+   ```env
+   SENDER_EMAIL=your-email@example.com
+   SENDER_PASSWORD=your-email-password
+   RECIPIENT_EMAIL=recipient-email@example.com
+   FIRST_KEYWORD=
+   SECOND_KEYWORD=
+   THIRD_KEYWORD=
 
 Contributing
 
