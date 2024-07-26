@@ -19,19 +19,11 @@ Project Structure
 Installation
 
     Clone the repository:
-
-    shell
-
-    git clone https://github.com/your-username/geeksforgeeks-trending-scraper.git
-
-
-Requirements
-
-    pip install -r requirements.txt
+    git clone https://github.com/halfareed/webscraping-email-feed.git
 
 Usage
 
-    Update the config.txt file with your email and password settings.
+    Update the .env file with necessary credentials.
     Run the main script to scrape and save trending articles:
 
     python main.py
